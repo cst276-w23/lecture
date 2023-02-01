@@ -4,8 +4,6 @@
 #include "shape.h"
 #include "circle_factory.h"
 
-using container = std::vector<std::unique_ptr<Shape> >;
-
 void render(sf::RenderWindow & window, const container & shapes) {
   // always clear!
   window.clear();
@@ -19,7 +17,7 @@ void render(sf::RenderWindow & window, const container & shapes) {
   window.display();
 }
 
-void processEvents(sf::RenderWindow & window, container & shapes) {
+void processEvents(sf::RenderWindow & window, const container & shapes) {
   sf::Event event;
   while (window.pollEvent(event)) {
     if (event.type == sf::Event::Closed) {
@@ -32,7 +30,7 @@ void processEvents(sf::RenderWindow & window, container & shapes) {
   }
 }
 
-void update(sf::Time dt, container & shapes) {
+void update(sf::Time dt, const container & shapes) {
   float t = dt.asSeconds();
   for (auto & shape : shapes) {
     shape->update(t);
@@ -44,10 +42,9 @@ int main() {
 
   sf::RenderWindow window{sf::VideoMode{win.getWidth(), win.getHeight()}, "In-Class"};
 
-  std::vector<std::unique_ptr<Shape> > shapes{};
-  for (size_t i{}; i < 10; ++i) {
-    shapes.emplace_back(CircleFactory::makeShape(i*30, 0));
-  }
+  container shapes = CircleFactory::makeShapes();
+  // add another shape if we want
+  shapes.push_back(CircleFactory::makeShape(0, 30));
 
   // for info on game loops:
   //   https://subscription.packtpub.com/book/game+development/9781849696845/1/ch01lvl1sec11/game-loops-and-frames
