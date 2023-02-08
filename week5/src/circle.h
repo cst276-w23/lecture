@@ -17,7 +17,6 @@ public:
   }
 
   void update(float dt) override {
-
   }
 
   void setPosition(float x, float y) override {

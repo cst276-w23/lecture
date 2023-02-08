@@ -2,6 +2,7 @@
 #include "rand.h"
 #include "window.h"
 #include "shape.h"
+#include "rect.h"
 #include "circle_factory.h"
 
 void render(sf::RenderWindow & window, const std::vector<Shape *> & shapes) {
@@ -40,7 +41,7 @@ int main() {
 
   std::vector<Shape *> shapes = CircleFactory::makeShapes();
   // add another shape if we want
-  Shape * shape = CircleFactory::makeShape(0, 60);
+  Shape * shape = new Rectangle{0, 60};
   shapes.push_back(shape);
 
   // for info on game loops:
