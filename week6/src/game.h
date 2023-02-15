@@ -1,15 +1,28 @@
+#pragma once
+
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "shape.h"
+#include "rect.h"
+#include "input.h"
 
 class Game {
 public:
-  Game(unsigned int width = 800, unsigned int height = 600) : window{sf::VideoMode{width, height}, "Game"} {}
+  Game(unsigned int width = 800, unsigned int height = 600) : window{sf::VideoMode{width, height}, "Game"} {
+    spaceBarHandler = new ShakeCommand{};
+    inputHandler.setSpaceBarHandler(spaceBarHandler);
+  }
 
   ~Game() {
+    delete spaceBarHandler;
+
     for (auto shape : shapes) {
       delete shape;
     }
+  }
+
+  void setActor(Rectangle * rect) {
+    actor = rect;
   }
 
   void run() {
@@ -57,6 +70,12 @@ private:
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
         window.close();
+        break;
+      }
+
+      Command * cmd = inputHandler.handleInput(event);
+      if (cmd) {
+        cmd->execute(actor);
       }
     }
   }
@@ -70,4 +89,7 @@ private:
 
   sf::RenderWindow window{};
   std::vector<Shape *> shapes{};
+  InputHandler inputHandler{};
+  Command * spaceBarHandler{};
+  Rectangle * actor{};
 };

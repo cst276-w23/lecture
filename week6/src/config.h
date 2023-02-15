@@ -1,9 +1,9 @@
 #pragma once
 
-class Window {
+class Config {
 public:
-  static Window & getInstance() {
-    static Window instance{};
+  static Config & getInstance() {
+    static Config instance{};
     return instance;
   }
 
@@ -24,8 +24,8 @@ public:
   }
 
 private:
-  Window() {}
-  ~Window() {}
+  Config() {}
+  ~Config() {}
 
   unsigned int width{1000};
   unsigned int height{600};

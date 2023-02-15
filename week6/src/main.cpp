@@ -1,19 +1,21 @@
 #include <SFML/Graphics.hpp>
 #include "game.h"
-#include "window.h"
+#include "config.h"
 #include "shape.h"
 #include "rect.h"
 #include "circle_factory.h"
 
 int main() {
-  Window & win = Window::getInstance();
-  Game game{win.getWidth(), win.getHeight()};
+  Config & config = Config::getInstance();
+  Game game{config.getWidth(), config.getHeight()};
 
   std::vector<Shape *> shapes = CircleFactory::makeShapes();
-  Shape * shape = new Rectangle{0, 60};
-  shapes.push_back(shape);
+  Rectangle * rect = new Rectangle{100, 100};
+  shapes.push_back(rect);
 
   game.addShapes(shapes);
+
+  game.setActor(rect);
 
   game.run();
 }

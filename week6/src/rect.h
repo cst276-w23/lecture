@@ -1,10 +1,11 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "rand.h"
 
 class Rectangle : public Shape {
 public:
-  Rectangle(float x, float y) : Rectangle{15.0f} {
+  Rectangle(float x, float y) : Rectangle{30.0f} {
     rect.setPosition(x, y);
   }
 
@@ -17,11 +18,27 @@ public:
   }
 
   void update(float dt) override {
-    rect.move(velocity.x*dt, velocity.y*dt);
+    auto dx = velocity.x*dt;
+    auto dy = velocity.y*dt;
+
+    if (timer > 0) {
+      constexpr int speed{50};
+      dx += rand(-speed, speed)*dt;
+      dy += rand(-speed, speed)*dt;
+      --timer;
+    }
+
+    rect.move(dx, dy);
   }
 
   void setPosition(float x, float y) override {
     rect.setPosition(x, y);
+  }
+
+  void shake() {
+    if (timer == 0) {
+      timer = 50;
+    }
   }
 
   ~Rectangle() override {}
@@ -29,4 +46,5 @@ public:
 private:
   sf::RectangleShape rect{};
   sf::Vector2f velocity{};
+  int timer{};
 };
