@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <SFML/Graphics.hpp>
 
 class Circle : public Shape {
@@ -21,6 +22,10 @@ public:
 
   void setPosition(float x, float y) override {
     circle.setPosition(x, y);
+  }
+
+  void move(float dx, float dy) override {
+    circle.move(dx, dy);
   }
 
   ~Circle() override {}

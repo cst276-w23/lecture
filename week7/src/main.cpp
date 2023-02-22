@@ -10,7 +10,7 @@ int main() {
   Game game{config.getWidth(), config.getHeight()};
 
   std::vector<Shape *> shapes = CircleFactory::makeShapes();
-  Rectangle * rect = new Rectangle{100, 100};
+  Rectangle * rect = new Rectangle{100, 200};
   shapes.push_back(rect);
 
   game.addShapes(shapes);

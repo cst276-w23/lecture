@@ -36,6 +36,10 @@ public:
     rect.setPosition(x, y);
   }
 
+  void move(float dx, float dy) override {
+    rect.move(dx, dy);
+  }
+
   void shake() {
     if (timer == 0) {
       timer = 50;

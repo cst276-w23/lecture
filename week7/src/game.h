@@ -5,11 +5,12 @@
 #include "shape.h"
 #include "rect.h"
 #include "input.h"
+#include "event_manager.h"
 
 class Game {
 public:
   Game(unsigned int width = 800, unsigned int height = 600) : window{sf::VideoMode{width, height}, "Game"} {
-    spaceBarHandler = new ShakeCommand{};
+    spaceBarHandler = new ShakeCommand{&eventManager};
     inputHandler.setSpaceBarHandler(spaceBarHandler);
   }
 
@@ -46,6 +47,7 @@ public:
 
   void addShape(Shape * shape) {
     shapes.push_back(shape);
+    eventManager.addListener(shape);
   }
 
   void addShapes(const std::vector<Shape *> & shapes) {
@@ -92,4 +94,5 @@ private:
   InputHandler inputHandler{};
   Command * spaceBarHandler{};
   Rectangle * actor{};
+  EventManager eventManager{};
 };
