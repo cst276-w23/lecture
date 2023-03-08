@@ -16,6 +16,12 @@ public:
     entities.push_back(player);
   }
 
+  ~World() {
+    for (auto & entity : entities) {
+      delete entity;
+    }
+  }
+
   void run() {
     while (graphics.window.isOpen()) {
       processGlobalEvents();
